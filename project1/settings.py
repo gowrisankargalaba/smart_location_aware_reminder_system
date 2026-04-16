@@ -95,7 +95,7 @@ DATABASES = {
 }
 
 
-# ---------------- AUTH ----------------
+# ---------------- PASSWORD VALIDATION ----------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -119,7 +119,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# ---------------- EMAIL (SAFE) ----------------
+# ---------------- EMAIL (SAFE FOR DEPLOYMENT) ----------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -130,7 +130,7 @@ EMAIL_HOST_PASSWORD = get_env('DJANGO_EMAIL_PASS', default='')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
-# ---------------- TWILIO ----------------
+# ---------------- TWILIO (SAFE) ----------------
 TWILIO_ACCOUNT_SID = get_env('TWILIO_ACCOUNT_SID', default='')
 TWILIO_AUTH_TOKEN = get_env('TWILIO_AUTH_TOKEN', default='')
 TWILIO_PHONE_NUMBER = get_env('TWILIO_PHONE_NUMBER', default='+917997182627')
