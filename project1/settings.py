@@ -163,25 +163,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Set these as environment variables on PythonAnywhere (Web > Environment variables):
 #   DJANGO_EMAIL_USER  = your email address
 #   DJANGO_EMAIL_PASS  = your Gmail app password
+
+# Email Config (Gmail SMTP)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = get_env('DJANGO_EMAIL_USER', required=True)
-EMAIL_HOST_PASSWORD = get_env('DJANGO_EMAIL_PASS', required=True)
+
+EMAIL_HOST_USER = get_env('DJANGO_EMAIL_USER', default='')
+EMAIL_HOST_PASSWORD = get_env('DJANGO_EMAIL_PASS', default='')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+
 # Twilio SMS Config
-# ⚠️  DO NOT hardcode credentials here.
-# Set these as environment variables on PythonAnywhere (Web > Environment variables):
-#   TWILIO_ACCOUNT_SID  = your Twilio Account SID (starts with AC...)
-#   TWILIO_AUTH_TOKEN   = your Twilio Auth Token
-#   TWILIO_PHONE_NUMBER = your Twilio phone number (e.g. +917997182627)
 TWILIO_ACCOUNT_SID = get_env('TWILIO_ACCOUNT_SID', required=True)
 TWILIO_AUTH_TOKEN = get_env('TWILIO_AUTH_TOKEN', required=True)
 TWILIO_PHONE_NUMBER = get_env('TWILIO_PHONE_NUMBER', default='+917997182627')
 
-# Google Maps Config
-# Set this as an environment variable on PythonAnywhere:
-#   GOOGLE_MAPS_API_KEY = your real key
-GOOGLE_MAPS_API_KEY = get_env('GOOGLE_MAPS_API_KEY', default='AIzaSyAIPbgRXzLosqB1vxSWVyfUy2vYflpU3zg')
+GOOGLE_MAPS_API_KEY = get_env('GOOGLE_MAPS_API_KEY', required=True)
