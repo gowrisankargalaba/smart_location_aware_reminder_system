@@ -1,34 +1,21 @@
 from pathlib import Path
 import os
-from django.core.exceptions import ImproperlyConfigured
-
-# Load .env if available
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
-
-
-def get_env(var_name, default=None, required=False):
-    value = os.environ.get(var_name, default)
-    if required and not value:
-        raise ImproperlyConfigured(
-            f"Environment variable '{var_name}' is required but not set."
-        )
-    return value
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# ---------------- ENV SAFETY ----------------
+def get_env(key, default=''):
+    return os.environ.get(key, default)
 
 
 # ---------------- SECURITY ----------------
 SECRET_KEY = get_env(
     'DJANGO_SECRET_KEY',
-    default='django-insecure-local-dev-key-change-in-production'
+    'django-insecure-local-dev-key-change-in-production'
 )
 
-DEBUG = get_env('DJANGO_DEBUG', default='False') == 'True'
+DEBUG = get_env('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -119,25 +106,25 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# ---------------- EMAIL (SAFE FOR DEPLOYMENT) ----------------
+# ---------------- EMAIL ----------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = get_env('DJANGO_EMAIL_USER', default='')
-EMAIL_HOST_PASSWORD = get_env('DJANGO_EMAIL_PASS', default='')
+EMAIL_HOST_USER = get_env('DJANGO_EMAIL_USER')
+EMAIL_HOST_PASSWORD = get_env('DJANGO_EMAIL_PASS')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
-# ---------------- TWILIO (SAFE) ----------------
-TWILIO_ACCOUNT_SID = get_env('TWILIO_ACCOUNT_SID', default='')
-TWILIO_AUTH_TOKEN = get_env('TWILIO_AUTH_TOKEN', default='')
-TWILIO_PHONE_NUMBER = get_env('TWILIO_PHONE_NUMBER', default='+917997182627')
+# ---------------- TWILIO ----------------
+TWILIO_ACCOUNT_SID = get_env('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = get_env('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = get_env('TWILIO_PHONE_NUMBER', '+917997182627')
 
 
 # ---------------- GOOGLE MAPS ----------------
-GOOGLE_MAPS_API_KEY = get_env('GOOGLE_MAPS_API_KEY', default='')
+GOOGLE_MAPS_API_KEY = get_env('GOOGLE_MAPS_API_KEY')
 
 
 # ---------------- DEFAULT ----------------
